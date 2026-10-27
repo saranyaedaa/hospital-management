@@ -794,4 +794,589 @@
                         <span class="badge-dot"></span>
                     </button>
                     <div class="admin-profile">
-                        <img src="https
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=faces" alt="Admin">
+                        <div class="admin-info">
+                            <h4>Dr. Robert Vance</h4>
+                            <p>Administrator</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Views Container -->
+            <main class="content-area">
+
+                <!-- 1. DASHBOARD VIEW -->
+                <section id="dashboard-view" class="view-section active">
+                    <div class="welcome-banner">
+                        <div>
+                            <h1>Hospital Dashboard</h1>
+                            <p>Welcome back, Dr. Vance. Here is your daily overview.</p>
+                        </div>
+                        <div class="banner-actions">
+                            <button class="btn btn-primary" onclick="openPatientModal()"><i class="fa-solid fa-plus"></i> Add Patient</button>
+                            <button class="btn btn-outline" onclick="switchView('appointments-view')"><i class="fa-solid fa-calendar-plus"></i> Schedule Appointment</button>
+                        </div>
+                    </div>
+
+                    <!-- Summary Cards Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue"><i class="fa-solid fa-user-group"></i></div>
+                            <div class="stat-details">
+                                <h3>1,250</h3>
+                                <p>Total Patients</p>
+                                <span class="trend positive"><i class="fa-solid fa-arrow-up"></i> +4.5% this month</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green"><i class="fa-solid fa-user-doctor"></i></div>
+                            <div class="stat-details">
+                                <h3>45</h3>
+                                <p>Total Doctors</p>
+                                <span class="trend neutral"><i class="fa-solid fa-minus"></i> Active on duty</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange"><i class="fa-solid fa-calendar-day"></i></div>
+                            <div class="stat-details">
+                                <h3>32</h3>
+                                <p>Appointments Today</p>
+                                <span class="trend positive"><i class="fa-solid fa-arrow-up"></i> 8 pending</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon purple"><i class="fa-solid fa-bed"></i></div>
+                            <div class="stat-details">
+                                <h3>68</h3>
+                                <p>Available Beds</p>
+                                <span class="trend negative"><i class="fa-solid fa-arrow-down"></i> 82% Occupied</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon teal"><i class="fa-solid fa-user-nurse"></i></div>
+                            <div class="stat-details">
+                                <h3>120</h3>
+                                <p>Total Staff</p>
+                                <span class="trend positive"><i class="fa-solid fa-circle-check"></i> Fully staffed</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon gold"><i class="fa-solid fa-wallet"></i></div>
+                            <div class="stat-details">
+                                <h3>₹8,50,000</h3>
+                                <p>Monthly Revenue</p>
+                                <span class="trend positive"><i class="fa-solid fa-arrow-up"></i> +12% vs last mo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Section -->
+                    <div class="charts-row">
+                        <div class="card chart-card">
+                            <div class="card-header">
+                                <h3>Patient Registration Statistics</h3>
+                                <select class="form-select-sm">
+                                    <option>This Year</option>
+                                    <option>Last Year</option>
+                                </select>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="patientChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="card chart-card">
+                            <div class="card-header">
+                                <h3>Appointment Status</h3>
+                                <span class="badge badge-info">Today</span>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="appointmentChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tables & Lists Grid -->
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Recent Appointments</h3>
+                                <a href="#" class="view-all" onclick="switchView('appointments-view')">View All</a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient Name</th>
+                                            <th>Department</th>
+                                            <th>Doctor</th>
+                                            <th>Time</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-appointments-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Bed Availability Overview</h3>
+                                <a href="#" class="view-all" onclick="switchView('beds-view')">Details</a>
+                            </div>
+                            <div class="bed-stats-list">
+                                <div class="bed-item">
+                                    <span class="ward-name">ICU Ward</span>
+                                    <div class="progress-bar"><div class="fill red" style="width: 85%;"></div></div>
+                                    <span class="bed-count">3/20 Free</span>
+                                </div>
+                                <div class="bed-item">
+                                    <span class="ward-name">General Ward</span>
+                                    <div class="progress-bar"><div class="fill blue" style="width: 60%;"></div></div>
+                                    <span class="bed-count">24/60 Free</span>
+                                </div>
+                                <div class="bed-item">
+                                    <span class="ward-name">Pediatrics</span>
+                                    <div class="progress-bar"><div class="fill green" style="width: 40%;"></div></div>
+                                    <span class="bed-count">18/30 Free</span>
+                                </div>
+                                <div class="bed-item">
+                                    <span class="ward-name">Private Rooms</span>
+                                    <div class="progress-bar"><div class="fill orange" style="width: 75%;"></div></div>
+                                    <span class="bed-count">5/20 Free</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. PATIENTS VIEW -->
+                <section id="patients-view" class="view-section">
+                    <div class="section-header">
+                        <div>
+                            <h1>Patient Management</h1>
+                            <p>Manage hospital patient records, admissions, and contact details.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="openPatientModal()"><i class="fa-solid fa-plus"></i> Add New Patient</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="table-toolbar">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="patient-search" placeholder="Search by name, ID, or phone..." onkeyup="filterPatients()">
+                            </div>
+                            <div class="filter-group">
+                                <select id="patient-filter-gender" class="form-select" onchange="filterPatients()">
+                                    <option value="">All Genders</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Patient Name</th>
+                                        <th>Age / Gender</th>
+                                        <th>Blood Group</th>
+                                        <th>Phone</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="patients-table-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. DOCTORS VIEW -->
+                <section id="doctors-view" class="view-section">
+                    <div class="section-header">
+                        <div>
+                            <h1>Doctor Directory</h1>
+                            <p>View medical staff schedules, specializations, and availability.</p>
+                        </div>
+                    </div>
+                    <div class="doctors-grid" id="doctors-grid-container"></div>
+                </section>
+
+                <!-- 4. APPOINTMENTS VIEW -->
+                <section id="appointments-view" class="view-section">
+                    <div class="section-header">
+                        <div>
+                            <h1>Appointments Schedule</h1>
+                            <p>Manage daily bookings, consultations, and follow-ups.</p>
+                        </div>
+                        <button class="btn btn-primary"><i class="fa-solid fa-calendar-plus"></i> New Appointment</button>
+                    </div>
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Appointment ID</th>
+                                        <th>Patient Name</th>
+                                        <th>Doctor</th>
+                                        <th>Department</th>
+                                        <th>Date & Time</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="full-appointments-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. BEDS VIEW -->
+                <section id="beds-view" class="view-section">
+                    <div class="section-header">
+                        <div>
+                            <h1>Bed Allocation & Status</h1>
+                            <p>Real-time room and ward occupancy monitoring.</p>
+                        </div>
+                    </div>
+                    <div class="stats-grid" id="beds-detailed-grid"></div>
+                </section>
+
+                <!-- 6. SETTINGS VIEW -->
+                <section id="settings-view" class="view-section">
+                    <div class="section-header">
+                        <div>
+                            <h1>System Settings</h1>
+                            <p>Configure hospital preferences, notifications, and user roles.</p>
+                        </div>
+                    </div>
+                    <div class="card" style="max-width: 600px;">
+                        <form onsubmit="event.preventDefault(); alert('Settings saved successfully!');">
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label style="display:block; margin-bottom: 0.50rem; font-weight:500;">Hospital Name</label>
+                                <input type="text" class="form-control" value="MediCare Pro General Hospital">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label style="display:block; margin-bottom: 0.50rem; font-weight:500;">Emergency Contact Hotline</label>
+                                <input type="text" class="form-control" value="+91 1800-420-MEDI">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <input type="checkbox" checked> Send daily summary reports to admin
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="background:var(--primary); color:white;">Save Changes</button>
+                        </form>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Patient Add/Edit Modal -->
+    <div class="modal-backdrop" id="patient-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Add New Patient</h3>
+                <button class="icon-btn" onclick="closePatientModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="patient-form">
+                    <input type="hidden" id="patient-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="p-name" class="form-control" required placeholder="e.g. John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" id="p-age" class="form-control" required placeholder="e.g. 35">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="p-gender" class="form-control" required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Blood Group</label>
+                            <select id="p-blood" class="form-control" required>
+                                <option value="A+">A+</option><option value="A-">A-</option>
+                                <option value="B+">B+</option><option value="B-">B-</option>
+                                <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                <option value="O+">O+</option><option value="O-">O-</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" id="p-phone" class="form-control" required placeholder="+91 98765 43210">
+                        </div>
+                        <div class="form-group">
+                            <label>Department</label>
+                            <select id="p-dept" class="form-control" required>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="Pediatrics">Pediatrics</option>
+                                <option value="General Medicine">General Medicine</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="p-status" class="form-control" required>
+                            <option value="Admitted">Admitted</option>
+                            <option value="Outpatient">Outpatient</option>
+                            <option value="Discharged">Discharged</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline" style="background:#f1f5f9; color:#334155;" onclick="closePatientModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary" style="background:var(--primary); color:white;">Save Patient</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Embedded JavaScript -->
+    <script>
+        let patientsData = [
+            { id: "P-1001", name: "Aarav Sharma", age: 42, gender: "Male", blood: "O+", phone: "+91 98234 56789", dept: "Cardiology", status: "Admitted" },
+            { id: "P-1002", name: "Priya Patel", age: 29, gender: "Female", blood: "A+", phone: "+91 98111 22334", dept: "Neurology", status: "Outpatient" },
+            { id: "P-1003", name: "Rohan Verma", age: 55, gender: "Male", blood: "B+", phone: "+91 97456 12345", dept: "Orthopedics", status: "Admitted" },
+            { id: "P-1004", name: "Ananya Iyer", age: 34, gender: "Female", blood: "AB+", phone: "+91 96554 44332", dept: "Pediatrics", status: "Discharged" },
+            { id: "P-1005", name: "Vikram Malhotra", age: 61, gender: "Male", blood: "O-", phone: "+91 99887 76655", dept: "General Medicine", status: "Admitted" }
+        ];
+
+        const doctorsData = [
+            { name: "Dr. Robert Vance", specialty: "Chief Cardiologist", exp: "15 Years Exp", image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&h=150&fit=crop&crop=faces", status: "Available" },
+            { name: "Dr. Sarah Jenkins", specialty: "Senior Neurologist", exp: "12 Years Exp", image: "https://images.unsplash.com/photo-1594824813576-9c44569e2c65?w=150&h=150&fit=crop&crop=faces", status: "In Surgery" },
+            { name: "Dr. Amit Deshmukh", specialty: "Orthopedic Surgeon", exp: "10 Years Exp", image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&h=150&fit=crop&crop=faces", status: "Available" },
+            { name: "Dr. Emily Wong", specialty: "Pediatrician", exp: "8 Years Exp", image: "https://images.unsplash.com/photo-1527613426441-2da1747f766d?w=150&h=150&fit=crop&crop=faces", status: "On Round" }
+        ];
+
+        const appointmentsData = [
+            { id: "APT-501", patient: "Aarav Sharma", doctor: "Dr. Robert Vance", dept: "Cardiology", time: "10:30 AM", status: "Confirmed" },
+            { id: "APT-502", patient: "Priya Patel", doctor: "Dr. Sarah Jenkins", dept: "Neurology", time: "11:15 AM", status: "Pending" },
+            { id: "APT-503", patient: "Rohan Verma", doctor: "Dr. Amit Deshmukh", dept: "Orthopedics", time: "01:00 PM", status: "Confirmed" },
+            { id: "APT-504", patient: "Ananya Iyer", doctor: "Dr. Emily Wong", dept: "Pediatrics", time: "02:30 PM", status: "Cancelled" }
+        ];
+
+        const bedWards = [
+            { ward: "ICU Ward", total: 20, occupied: 17, free: 3, color: "red" },
+            { ward: "General Ward", total: 60, occupied: 36, free: 24, color: "blue" },
+            { ward: "Pediatrics", total: 30, occupied: 12, free: 18, color: "green" },
+            { ward: "Private Rooms", total: 20, occupied: 15, free: 5, color: "orange" },
+            { ward: "Emergency Ward", total: 25, occupied: 22, free: 3, color: "red" },
+            { ward: "Maternity Ward", total: 40, occupied: 25, free: 15, color: "green" }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initNavigation();
+            initCharts();
+            renderPatientsTable();
+            renderRecentAppointments();
+            renderFullAppointments();
+            renderDoctorsGrid();
+            renderBedsGrid();
+            initPatientForm();
+        });
+
+        function initNavigation() {
+            const menuItems = document.querySelectorAll(".sidebar-menu li");
+            menuItems.forEach(item => {
+                item.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    menuItems.forEach(i => i.classList.remove("active"));
+                    item.classList.add("active");
+                    switchView(item.getAttribute("data-target"));
+                });
+            });
+
+            document.getElementById("sidebar-toggle").addEventListener("click", () => {
+                document.getElementById("sidebar").classList.toggle("collapsed");
+            });
+        }
+
+        function switchView(viewId) {
+            document.querySelectorAll(".view-section").forEach(s => s.classList.remove("active"));
+            const target = document.getElementById(viewId);
+            if (target) target.classList.add("active");
+        }
+
+        function initCharts() {
+            new Chart(document.getElementById('patientChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        data: [85, 92, 110, 98, 130, 145, 120, 135, 150, 165, 140, 175],
+                        borderColor: '#0284c7',
+                        backgroundColor: 'rgba(2, 132, 199, 0.08)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            new Chart(document.getElementById('appointmentChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Confirmed', 'Pending', 'Cancelled'],
+                    datasets: [{ data: [20, 8, 4], backgroundColor: ['#10b981', '#f59e0b', '#ef4444'], borderWidth: 0 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, cutout: '70%' }
+            });
+        }
+
+        function renderPatientsTable(data = patientsData) {
+            const tbody = document.getElementById("patients-table-body");
+            tbody.innerHTML = "";
+            data.forEach(p => {
+                let badgeClass = p.status === 'Admitted' ? 'success' : (p.status === 'Discharged' ? 'warning' : 'info');
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${p.id}</strong></td>
+                        <td>${p.name}</td>
+                        <td>${p.age} yrs / ${p.gender}</td>
+                        <td><span class="badge info">${p.blood}</span></td>
+                        <td>${p.phone}</td>
+                        <td>${p.dept}</td>
+                        <td><span class="badge ${badgeClass}">${p.status}</span></td>
+                        <td>
+                            <button class="action-icon-btn edit" onclick="editPatient('${p.id}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="action-icon-btn delete" onclick="deletePatient('${p.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function renderRecentAppointments() {
+            const tbody = document.getElementById("recent-appointments-tbody");
+            tbody.innerHTML = "";
+            appointmentsData.slice(0, 4).forEach(a => {
+                let badgeClass = a.status === 'Confirmed' ? 'success' : (a.status === 'Pending' ? 'warning' : 'danger');
+                tbody.innerHTML += `<tr><td><strong>${a.patient}</strong></td><td>${a.dept}</td><td>${a.doctor}</td><td>${a.time}</td><td><span class="badge ${badgeClass}">${a.status}</span></td></tr>`;
+            });
+        }
+
+        function renderFullAppointments() {
+            const tbody = document.getElementById("full-appointments-tbody");
+            tbody.innerHTML = "";
+            appointmentsData.forEach(a => {
+                let badgeClass = a.status === 'Confirmed' ? 'success' : (a.status === 'Pending' ? 'warning' : 'danger');
+                tbody.innerHTML += `<tr><td><strong>${a.id}</strong></td><td>${a.patient}</td><td>${a.doctor}</td><td>${a.dept}</td><td>${a.time}</td><td><span class="badge ${badgeClass}">${a.status}</span></td><td><button class="action-icon-btn edit"><i class="fa-solid fa-eye"></i></button></td></tr>`;
+            });
+        }
+
+        function renderDoctorsGrid() {
+            const container = document.getElementById("doctors-grid-container");
+            container.innerHTML = "";
+            doctorsData.forEach(d => {
+                container.innerHTML += `
+                    <div class="doctor-card">
+                        <img src="${d.image}" alt="${d.name}">
+                        <h4>${d.name}</h4>
+                        <p class="specialty">${d.specialty}</p>
+                        <p class="meta">${d.exp} • <span style="color:var(--success)">${d.status}</span></p>
+                        <button class="btn btn-outline" style="width:100%; justify-content:center; color:var(--primary); border-color:var(--border);" onclick="switchView('appointments-view')">Book Consult</button>
+                    </div>`;
+            });
+        }
+
+        function renderBedsGrid() {
+            const container = document.getElementById("beds-detailed-grid");
+            if (!container) return;
+            container.innerHTML = "";
+            bedWards.forEach(w => {
+                const pct = Math.round((w.occupied / w.total) * 100);
+                container.innerHTML += `
+                    <div class="stat-card">
+                        <div class="stat-icon ${w.color}"><i class="fa-solid fa-bed-pulse"></i></div>
+                        <div class="stat-details" style="width:100%;">
+                            <h3>${w.free} / ${w.total} Free</h3>
+                            <p>${w.ward} (${pct}% Occupied)</p>
+                            <div class="progress-bar" style="margin-top:6px;"><div class="fill ${w.color}" style="width: ${pct}%;"></div></div>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function filterPatients() {
+            const query = document.getElementById("patient-search").value.toLowerCase();
+            const genderFilter = document.getElementById("patient-filter-gender").value;
+            const filtered = patientsData.filter(p => (p.name.toLowerCase().includes(query) || p.id.toLowerCase().includes(query)) && (genderFilter === "" || p.gender === genderFilter));
+            renderPatientsTable(filtered);
+        }
+
+        function openPatientModal(patient = null) {
+            const form = document.getElementById("patient-form");
+            form.reset();
+            if (patient) {
+                document.getElementById("modal-title").innerText = "Edit Patient Details";
+                document.getElementById("patient-id").value = patient.id;
+                document.getElementById("p-name").value = patient.name;
+                document.getElementById("p-age").value = patient.age;
+                document.getElementById("p-gender").value = patient.gender;
+                document.getElementById("p-blood").value = patient.blood;
+                document.getElementById("p-phone").value = patient.phone;
+                document.getElementById("p-dept").value = patient.dept;
+                document.getElementById("p-status").value = patient.status;
+            } else {
+                document.getElementById("modal-title").innerText = "Add New Patient";
+                document.getElementById("patient-id").value = "P-" + (1000 + patientsData.length + 1);
+            }
+            document.getElementById("patient-modal").classList.add("active");
+        }
+
+        function closePatientModal() {
+            document.getElementById("patient-modal").classList.remove("active");
+        }
+
+        function initPatientForm() {
+            document.getElementById("patient-form").addEventListener("submit", (e) => {
+                e.preventDefault();
+                const id = document.getElementById("patient-id").value;
+                const name = document.getElementById("p-name").value;
+                const age = parseInt(document.getElementById("p-age").value);
+                const gender = document.getElementById("p-gender").value;
+                const blood = document.getElementById("p-blood").value;
+                const phone = document.getElementById("p-phone").value;
+                const dept = document.getElementById("p-dept").value;
+                const status = document.getElementById("p-status").value;
+
+                const idx = patientsData.findIndex(p => p.id === id);
+                if (idx >= 0) {
+                    patientsData[idx] = { id, name, age, gender, blood, phone, dept, status };
+                } else {
+                    patientsData.unshift({ id, name, age, gender, blood, phone, dept, status });
+                }
+                renderPatientsTable();
+                closePatientModal();
+            });
+        }
+
+        function editPatient(id) {
+            const p = patientsData.find(item => item.id === id);
+            if (p) openPatientModal(p);
+        }
+
+        function deletePatient(id) {
+            if (confirm(`Are you sure you want to delete patient record ${id}?`)) {
+                patientsData = patientsData.filter(p => p.id !== id);
+                renderPatientsTable();
+            }
+        }
+    </script>
+</body>
+</html>
