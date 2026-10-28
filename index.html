@@ -3,263 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediCare Pro - Hospital Management System</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>EduPulse - Student Management System</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables & Reset */
+        /* CSS STYLES */
         :root {
-            --primary: #0284c7;
-            --primary-dark: #0369a1;
-            --primary-light: #e0f2fe;
-            --secondary: #0f172a;
-            --text-main: #334155;
-            --text-muted: #64748b;
+            --primary-navy: #1e293b;
+            --primary-accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-light: #eff6ff;
             --bg-main: #f8fafc;
-            --white: #ffffff;
-            --border: #e2e8f0;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            --success-bg: #dcfce7;
+            --success-text: #15803d;
+            --warning-bg: #fef9c3;
+            --warning-text: #a16207;
+            --danger-bg: #fee2e2;
+            --danger-text: #b91c1c;
             --sidebar-width: 260px;
-            --header-height: 70px;
-            --transition: all 0.3s ease;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         body {
             background-color: var(--bg-main);
-            color: var(--text-main);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
-        .app-container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
+        /* --- SIDEBAR --- */
+        aside.sidebar {
             width: var(--sidebar-width);
-            background-color: var(--secondary);
-            color: var(--white);
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
+            background-color: var(--primary-navy);
+            color: #ffffff;
             display: flex;
             flex-direction: column;
-            z-index: 100;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 40;
             transition: var(--transition);
         }
 
-        .sidebar-brand {
-            height: var(--header-height);
+        .sidebar-header {
+            padding: 24px;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0 1.5rem;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.03);
+            gap: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .sidebar-brand i {
-            color: var(--primary);
-            font-size: 1.5rem;
+        .sidebar-header i {
+            font-size: 1.6rem;
+            color: #60a5fa;
         }
 
-        .sidebar-menu {
-            list-style: none;
-            padding: 1.5rem 0.75rem;
-            flex-grow: 1;
+        .sidebar-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
-        .sidebar-menu li {
-            margin-bottom: 0.5rem;
-            border-radius: 8px;
-            transition: var(--transition);
+        .sidebar-nav {
+            padding: 20px 12px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        .sidebar-menu li a {
+        .nav-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 0.85rem 1rem;
+            gap: 14px;
+            padding: 12px 16px;
             color: #94a3b8;
             text-decoration: none;
+            border-radius: var(--radius-md);
             font-weight: 500;
             font-size: 0.95rem;
-            border-radius: 8px;
             transition: var(--transition);
+            cursor: pointer;
         }
 
-        .sidebar-menu li:hover a,
-        .sidebar-menu li.active a {
-            color: var(--white);
-            background-color: var(--primary);
+        .nav-item:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.06);
         }
 
-        .sidebar-menu li.active {
-            background-color: var(--primary);
-        }
-
-        .sidebar-menu li a i {
-            font-size: 1.1rem;
-            width: 24px;
-            text-align: center;
+        .nav-item.active {
+            color: #ffffff;
+            background-color: var(--primary-accent);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
         .sidebar-footer {
-            padding: 1rem 1.5rem;
+            padding: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.8rem;
+            color: #64748b;
+            text-align: center;
         }
 
-        .sidebar-footer a {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: #ef4444;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        /* Main Wrapper */
+        /* --- MAIN WRAPPER --- */
         .main-wrapper {
-            flex-grow: 1;
             margin-left: var(--sidebar-width);
+            flex: 1;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            min-width: 0;
             transition: var(--transition);
         }
 
-        /* Top Navigation Bar */
-        .top-navbar {
-            height: var(--header-height);
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
+        /* --- TOP HEADER --- */
+        header.topbar {
+            height: 70px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 2rem;
+            padding: 0 32px;
             position: sticky;
             top: 0;
-            z-index: 99;
+            z-index: 30;
         }
 
-        .nav-left, .nav-right {
+        .topbar-left {
             display: flex;
             align-items: center;
-            gap: 1.25rem;
+            gap: 16px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .topbar-search {
+            position: relative;
+            width: 320px;
+        }
+
+        .topbar-search i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .topbar-search input {
+            width: 100%;
+            padding: 10px 14px 10px 40px;
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .topbar-search input:focus {
+            border-color: var(--primary-accent);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
         .icon-btn {
-            background: transparent;
+            position: relative;
+            background: none;
             border: none;
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            cursor: pointer;
             width: 40px;
             height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--text-muted);
+            cursor: pointer;
             transition: var(--transition);
         }
 
         .icon-btn:hover {
             background-color: var(--bg-main);
-            color: var(--primary);
+            color: var(--text-dark);
         }
 
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 0.5rem 0.85rem;
-            gap: 0.75rem;
-            width: 320px;
-        }
-
-        .search-box i {
-            color: var(--text-muted);
-        }
-
-        .search-box input {
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 0.9rem;
-            width: 100%;
-            color: var(--text-main);
-        }
-
-        .notification-bell {
-            position: relative;
-        }
-
-        .badge-dot {
+        .icon-btn .badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 6px;
+            right: 6px;
             width: 8px;
             height: 8px;
-            background-color: var(--danger);
+            background-color: var(--danger-text);
             border-radius: 50%;
         }
 
-        .admin-profile {
+        .user-profile {
             display: flex;
             align-items: center;
-            gap: 0.85rem;
-            border-left: 1px solid var(--border);
-            padding-left: 1.25rem;
+            gap: 12px;
+            padding-left: 12px;
+            border-left: 1px solid var(--border-color);
+            cursor: pointer;
         }
 
-        .admin-profile img {
-            width: 40px;
-            height: 40px;
+        .avatar {
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            object-fit: cover;
+            background-color: var(--accent-light);
+            color: var(--primary-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 1px var(--border-color);
         }
 
-        .admin-info h4 {
-            font-size: 0.9rem;
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 0.88rem;
             font-weight: 600;
-            color: var(--secondary);
+            color: var(--text-dark);
         }
 
-        .admin-info p {
+        .user-role {
             font-size: 0.75rem;
             color: var(--text-muted);
         }
 
-        /* Content Area */
-        .content-area {
-            padding: 2rem;
-            flex-grow: 1;
+        /* --- CONTENT AREA --- */
+        main.content {
+            padding: 32px;
+            flex: 1;
         }
 
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .page-title h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-dark);
+        }
+
+        .page-title p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* View Sections Visibility */
         .view-section {
             display: none;
-            animation: fadeIn 0.3s ease-in-out;
+            animation: fadeIn 0.3s ease;
         }
 
         .view-section.active {
@@ -271,385 +314,457 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Welcome Banner */
-        .welcome-banner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
-        }
-
-        .welcome-banner h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .welcome-banner p {
-            opacity: 0.9;
-            font-size: 0.95rem;
-        }
-
-        .banner-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        /* Buttons */
+        /* --- BUTTONS --- */
         .btn {
-            padding: 0.65rem 1.25rem;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
             border: none;
             transition: var(--transition);
             text-decoration: none;
         }
 
         .btn-primary {
-            background-color: var(--white);
-            color: var(--primary);
+            background-color: var(--primary-accent);
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
         }
 
         .btn-primary:hover {
+            background-color: var(--accent-hover);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
             background-color: var(--bg-main);
-            transform: translateY(-1px);
+            border-color: var(--text-light);
         }
 
-        .btn-outline {
-            background-color: transparent;
-            color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+        .btn-danger {
+            background-color: #ef4444;
+            color: #ffffff;
         }
 
-        .btn-outline:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+        .btn-danger:hover {
+            background-color: #dc2626;
         }
 
-        /* Stats Grid */
-        .stats-grid {
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: var(--radius-sm);
+        }
+
+        .btn-icon-only {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+        }
+
+        /* --- METRICS CARDS --- */
+        .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 20px;
+            margin-bottom: 28px;
         }
 
-        .stat-card {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
-            transform: translateY(-2px);
-        }
-
-        .stat-icon {
-            width: 54px;
-            height: 54px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-        }
-
-        .stat-icon.blue { background: #e0f2fe; color: #0284c7; }
-        .stat-icon.green { background: #d1fae5; color: #059669; }
-        .stat-icon.orange { background: #ffedd5; color: #ea580c; }
-        .stat-icon.purple { background: #f3e8ff; color: #9333ea; }
-        .stat-icon.teal { background: #ccfbf1; color: #0d9488; }
-        .stat-icon.gold { background: #fef3c7; color: #d97706; }
-
-        .stat-details h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 0.15rem;
-        }
-
-        .stat-details p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 0.35rem;
-        }
-
-        .trend {
-            font-size: 0.75rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .trend.positive { color: var(--success); }
-        .trend.neutral { color: var(--text-muted); }
-        .trend.negative { color: var(--danger); }
-
-        /* Charts Row */
-        .charts-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .card {
-            background: var(--white);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-        }
-
-        .card-header {
+        .metric-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .metric-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .metric-info h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-top: 6px;
+        }
+
+        .metric-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+        }
+
+        .metric-icon.blue { background-color: #eff6ff; color: #2563eb; }
+        .metric-icon.green { background-color: #f0fdf4; color: #16a34a; }
+        .metric-icon.purple { background-color: #faf5ff; color: #9333ea; }
+        .metric-icon.pink { background-color: #fdf2f8; color: #db2777; }
+
+        /* --- DASHBOARD CHARTS & TABLES --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .card-header h3 {
             font-size: 1.05rem;
             font-weight: 600;
-            color: var(--secondary);
+            color: var(--text-dark);
         }
 
-        .view-all {
-            font-size: 0.85rem;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
+        .card-body {
+            padding: 24px;
         }
 
+        /* SVG Donut Chart Styling */
         .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             position: relative;
-            height: 280px;
+        }
+
+        .donut-chart {
+            width: 180px;
+            height: 180px;
+            transform: rotate(-90deg);
+        }
+
+        .donut-chart circle {
+            fill: transparent;
+            stroke-width: 22;
+            transition: stroke-dasharray 0.6s ease;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
             width: 100%;
         }
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1.5rem;
-        }
-
-        /* Tables */
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        .data-table th {
-            background-color: var(--bg-main);
-            color: var(--text-muted);
-            font-weight: 600;
-            padding: 0.85rem 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .data-table td {
-            padding: 0.85rem 1rem;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-main);
-            vertical-align: middle;
-        }
-
-        .data-table tbody tr:hover {
-            background-color: #f8fafc;
-        }
-
-        /* Badges */
-        .badge {
-            padding: 0.35rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            display: inline-block;
-        }
-
-        .badge.success { background: #d1fae5; color: #065f46; }
-        .badge.warning { background: #fef3c7; color: #92400e; }
-        .badge.danger { background: #fee2e2; color: #991b1b; }
-        .badge.info { background: #e0f2fe; color: #0369a1; }
-
-        /* Bed Progress Bars */
-        .bed-stats-list {
+        .legend-item {
             display: flex;
-            flex-direction: column;
-            gap: 1.15rem;
-        }
-
-        .bed-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-        }
-
-        .bed-item .ward-name {
+            align-items: center;
+            gap: 8px;
             font-size: 0.85rem;
+            color: var(--text-muted);
             font-weight: 500;
-            color: var(--secondary);
         }
 
-        .progress-bar {
-            height: 8px;
-            background: var(--bg-main);
-            border-radius: 4px;
-            overflow: hidden;
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
         }
 
-        .progress-bar .fill {
-            height: 100%;
-            border-radius: 4px;
-        }
-
-        .progress-bar .fill.red { background: var(--danger); }
-        .progress-bar .fill.blue { background: var(--primary); }
-        .progress-bar .fill.green { background: var(--success); }
-        .progress-bar .fill.orange { background: var(--warning); }
-
-        .bed-count {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-align: right;
-        }
-
-        .section-header {
+        /* --- TABLE STYLES --- */
+        .table-controls {
+            padding: 20px 24px;
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
             align-items: center;
-            margin-bottom: 1.5rem;
+            justify-content: space-between;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .section-header h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 0.25rem;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .table-toolbar {
+        .search-filter-group {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.25rem;
-            gap: 1rem;
+            flex-wrap: wrap;
+            gap: 12px;
+            flex: 1;
         }
 
-        .form-select, .form-select-sm {
-            padding: 0.5rem 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            background: var(--white);
-            color: var(--text-main);
-            font-size: 0.9rem;
+        .input-search {
+            position: relative;
+            min-width: 220px;
+            flex: 1;
+        }
+
+        .input-search i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .input-search input {
+            width: 100%;
+            padding: 8px 12px 8px 36px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
             outline: none;
         }
 
-        /* Doctors Grid */
-        .doctors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.5rem;
+        .select-filter {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            background-color: #ffffff;
+            color: var(--text-dark);
+            outline: none;
+            cursor: pointer;
         }
 
-        .doctor-card {
-            background: var(--white);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
         }
 
-        .doctor-card img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 1rem;
-            border: 3px solid var(--primary-light);
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.88rem;
         }
 
-        .doctor-card h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--secondary);
-            margin-bottom: 0.25rem;
-        }
-
-        .doctor-card p.specialty {
-            color: var(--primary);
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 0.75rem;
-        }
-
-        .doctor-card p.meta {
-            font-size: 0.8rem;
+        table.data-table th {
+            background-color: #f8fafc;
             color: var(--text-muted);
-            margin-bottom: 1rem;
+            font-weight: 600;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+            user-select: none;
+            cursor: pointer;
         }
 
-        /* Modal */
+        table.data-table th:hover {
+            color: var(--text-dark);
+        }
+
+        table.data-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-dark);
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        table.data-table tbody tr {
+            transition: var(--transition);
+        }
+
+        table.data-table tbody tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .status-badge.active {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+        }
+
+        .status-badge.inactive {
+            background-color: var(--danger-bg);
+            color: var(--danger-text);
+        }
+
+        .status-badge::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: currentColor;
+        }
+
+        /* Action Buttons */
+        .action-cell {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-action {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background-color: #ffffff;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-action.view:hover { background-color: var(--accent-light); color: var(--primary-accent); border-color: var(--primary-accent); }
+        .btn-action.edit:hover { background-color: var(--warning-bg); color: var(--warning-text); border-color: var(--warning-text); }
+        .btn-action.delete:hover { background-color: var(--danger-bg); color: var(--danger-text); border-color: var(--danger-text); }
+
+        /* Pagination */
+        .pagination-container {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+        }
+
+        .pagination-info {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        /* --- FORM STYLES --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group label span {
+            color: #ef4444;
+        }
+
+        .form-control {
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-control.error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .error-text {
+            font-size: 0.75rem;
+            color: #ef4444;
+            display: none;
+        }
+
+        .form-control.error + .error-text {
+            display: block;
+        }
+
+        /* --- MODAL DIALOGS --- */
         .modal-backdrop {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(15, 23, 42, 0.5);
+            right: 0;
+            bottom: 0;
+            background-color: rgba(15, 23, 42, 0.5);
             backdrop-filter: blur(4px);
+            z-index: 50;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
             opacity: 0;
-            pointer-events: none;
+            visibility: hidden;
             transition: var(--transition);
         }
 
         .modal-backdrop.active {
             opacity: 1;
-            pointer-events: auto;
+            visibility: visible;
         }
 
         .modal {
-            background: var(--white);
-            width: 100%;
-            max-width: 550px;
-            border-radius: 12px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
             transform: scale(0.95);
             transition: var(--transition);
-            overflow: hidden;
         }
 
         .modal-backdrop.active .modal {
@@ -657,8 +772,8 @@
         }
 
         .modal-header {
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--border);
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -666,717 +781,903 @@
 
         .modal-header h3 {
             font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            cursor: pointer;
         }
 
         .modal-body {
-            padding: 1.5rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-main);
-            margin-bottom: 0.35rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.65rem 0.85rem;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.9rem;
-            outline: none;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+            padding: 24px;
         }
 
         .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: flex-end;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
+            gap: 12px;
         }
 
-        .action-icon-btn {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-right: 0.5rem;
-            padding: 6px;
-            border-radius: 4px;
-            transition: var(--transition);
+        /* Details Modal Specifics */
+        .student-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
         }
 
-        .action-icon-btn.edit { color: var(--primary); background: var(--primary-light); }
-        .action-icon-btn.delete { color: var(--danger); background: #fee2e2; }
-        .action-icon-btn:hover { opacity: 0.8; }
+        .detail-item p.label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
 
-        @media (max-width: 1024px) {
-            .charts-row, .dashboard-grid { grid-template-columns: 1fr; }
+        .detail-item p.value {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-top: 2px;
+        }
+
+        /* --- TOAST NOTIFICATIONS --- */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background-color: var(--primary-navy);
+            color: #ffffff;
+            padding: 14px 20px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.88rem;
+            animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+            min-width: 280px;
+        }
+
+        .toast.success { border-left: 4px solid #22c55e; }
+        .toast.danger { border-left: 4px solid #ef4444; }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        /* Empty state */
+        .empty-state {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.collapsed { transform: translateX(0); }
-            .main-wrapper { margin-left: 0; }
-            .welcome-banner { flex-direction: column; align-items: flex-start; gap: 1rem; }
-            .search-box { width: 200px; }
+            aside.sidebar {
+                transform: translateX(-100%);
+            }
+
+            aside.sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .topbar-search {
+                width: 200px;
+            }
+
+            .form-grid, .student-details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            header.topbar {
+                padding: 0 16px;
+            }
+
+            main.content {
+                padding: 16px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-brand">
-                <i class="fa-solid fa-hospital-user"></i>
-                <span>MediCare Pro</span>
-            </div>
-            <ul class="sidebar-menu">
-                <li class="active" data-target="dashboard-view">
-                    <a href="#"><i class="fa-solid fa-house-chimney"></i><span>Dashboard</span></a>
-                </li>
-                <li data-target="patients-view">
-                    <a href="#"><i class="fa-solid fa-user-injured"></i><span>Patients</span></a>
-                </li>
-                <li data-target="doctors-view">
-                    <a href="#"><i class="fa-solid fa-user-doctor"></i><span>Doctors</span></a>
-                </li>
-                <li data-target="appointments-view">
-                    <a href="#"><i class="fa-solid fa-calendar-check"></i><span>Appointments</span></a>
-                </li>
-                <li data-target="beds-view">
-                    <a href="#"><i class="fa-solid fa-bed-pulse"></i><span>Bed Status</span></a>
-                </li>
-                <li data-target="settings-view">
-                    <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
-                </li>
-            </ul>
-            <div class="sidebar-footer">
-                <a href="#" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
-            </div>
-        </aside>
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>EduPulse</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="nav-item active" data-view="dashboard">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Dashboard</span>
+            </a>
+            <a class="nav-item" data-view="students">
+                <i class="fa-solid fa-user-graduate"></i>
+                <span>Students</span>
+            </a>
+            <a class="nav-item" data-view="add-student">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Add Student</span>
+            </a>
+            <a class="nav-item" data-view="settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            &copy; 2026 EduPulse Admin Panel
+        </div>
+    </aside>
 
-        <!-- Main Content Wrapper -->
-        <div class="main-wrapper">
-            <!-- Top Navigation Bar -->
-            <header class="top-navbar">
-                <div class="nav-left">
-                    <button id="sidebar-toggle" class="icon-btn"><i class="fa-solid fa-bars"></i></button>
-                    <div class="search-box">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" placeholder="Search patients, doctors, records...">
+    <!-- MAIN APP CONTENT AREA -->
+    <div class="main-wrapper">
+        <!-- TOP NAVBAR -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="sidebarToggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="topbar-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="globalSearch" placeholder="Search anything...">
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="icon-btn" title="Notifications">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="badge"></span>
+                </button>
+                <div class="user-profile">
+                    <div class="avatar">AD</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin User</span>
+                        <span class="user-role">Administrator</span>
                     </div>
                 </div>
-                <div class="nav-right">
-                    <button class="icon-btn notification-bell">
-                        <i class="fa-solid fa-bell"></i>
-                        <span class="badge-dot"></span>
+            </div>
+        </header>
+
+        <!-- MAIN VIEW PORT -->
+        <main class="content">
+
+            <!-- VIEW 1: DASHBOARD -->
+            <section id="dashboard" class="view-section active">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Dashboard Overview</h1>
+                        <p>Welcome back! Here's what's happening today.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="switchView('add-student')">
+                        <i class="fa-solid fa-plus"></i> Register New Student
                     </button>
-                    <div class="admin-profile">
-                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=faces" alt="Admin">
-                        <div class="admin-info">
-                            <h4>Dr. Robert Vance</h4>
-                            <p>Administrator</p>
+                </div>
+
+                <!-- METRICS SUMMARY CARDS -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <p>Total Students</p>
+                            <h3 id="statTotal">0</h3>
+                        </div>
+                        <div class="metric-icon blue">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <p>Active Enrolled</p>
+                            <h3 id="statActive">0</h3>
+                        </div>
+                        <div class="metric-icon green">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <p>Male Students</p>
+                            <h3 id="statMale">0</h3>
+                        </div>
+                        <div class="metric-icon purple">
+                            <i class="fa-solid fa-mars"></i>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <p>Female Students</p>
+                            <h3 id="statFemale">0</h3>
+                        </div>
+                        <div class="metric-icon pink">
+                            <i class="fa-solid fa-venus"></i>
                         </div>
                     </div>
                 </div>
-            </header>
 
-            <!-- Dynamic Views Container -->
-            <main class="content-area">
-
-                <!-- 1. DASHBOARD VIEW -->
-                <section id="dashboard-view" class="view-section active">
-                    <div class="welcome-banner">
-                        <div>
-                            <h1>Hospital Dashboard</h1>
-                            <p>Welcome back, Dr. Vance. Here is your daily overview.</p>
-                        </div>
-                        <div class="banner-actions">
-                            <button class="btn btn-primary" onclick="openPatientModal()"><i class="fa-solid fa-plus"></i> Add Patient</button>
-                            <button class="btn btn-outline" onclick="switchView('appointments-view')"><i class="fa-solid fa-calendar-plus"></i> Schedule Appointment</button>
-                        </div>
-                    </div>
-
-                    <!-- Summary Cards Grid -->
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon blue"><i class="fa-solid fa-user-group"></i></div>
-                            <div class="stat-details">
-                                <h3>1,250</h3>
-                                <p>Total Patients</p>
-                                <span class="trend positive"><i class="fa-solid fa-arrow-up"></i> +4.5% this month</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon green"><i class="fa-solid fa-user-doctor"></i></div>
-                            <div class="stat-details">
-                                <h3>45</h3>
-                                <p>Total Doctors</p>
-                                <span class="trend neutral"><i class="fa-solid fa-minus"></i> Active on duty</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon orange"><i class="fa-solid fa-calendar-day"></i></div>
-                            <div class="stat-details">
-                                <h3>32</h3>
-                                <p>Appointments Today</p>
-                                <span class="trend positive"><i class="fa-solid fa-arrow-up"></i> 8 pending</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon purple"><i class="fa-solid fa-bed"></i></div>
-                            <div class="stat-details">
-                                <h3>68</h3>
-                                <p>Available Beds</p>
-                                <span class="trend negative"><i class="fa-solid fa-arrow-down"></i> 82% Occupied</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon teal"><i class="fa-solid fa-user-nurse"></i></div>
-                            <div class="stat-details">
-                                <h3>120</h3>
-                                <p>Total Staff</p>
-                                <span class="trend positive"><i class="fa-solid fa-circle-check"></i> Fully staffed</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon gold"><i class="fa-solid fa-wallet"></i></div>
-                            <div class="stat-details">
-                                <h3>₹8,50,000</h3>
-                                <p>Monthly Revenue</p>
-                                <span class="trend positive"><i class="fa-solid fa-arrow-up"></i> +12% vs last mo</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Charts Section -->
-                    <div class="charts-row">
-                        <div class="card chart-card">
-                            <div class="card-header">
-                                <h3>Patient Registration Statistics</h3>
-                                <select class="form-select-sm">
-                                    <option>This Year</option>
-                                    <option>Last Year</option>
-                                </select>
-                            </div>
-                            <div class="chart-container">
-                                <canvas id="patientChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="card chart-card">
-                            <div class="card-header">
-                                <h3>Appointment Status</h3>
-                                <span class="badge badge-info">Today</span>
-                            </div>
-                            <div class="chart-container">
-                                <canvas id="appointmentChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tables & Lists Grid -->
-                    <div class="dashboard-grid">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Recent Appointments</h3>
-                                <a href="#" class="view-all" onclick="switchView('appointments-view')">View All</a>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="data-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Patient Name</th>
-                                            <th>Department</th>
-                                            <th>Doctor</th>
-                                            <th>Time</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="recent-appointments-tbody"></tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Bed Availability Overview</h3>
-                                <a href="#" class="view-all" onclick="switchView('beds-view')">Details</a>
-                            </div>
-                            <div class="bed-stats-list">
-                                <div class="bed-item">
-                                    <span class="ward-name">ICU Ward</span>
-                                    <div class="progress-bar"><div class="fill red" style="width: 85%;"></div></div>
-                                    <span class="bed-count">3/20 Free</span>
-                                </div>
-                                <div class="bed-item">
-                                    <span class="ward-name">General Ward</span>
-                                    <div class="progress-bar"><div class="fill blue" style="width: 60%;"></div></div>
-                                    <span class="bed-count">24/60 Free</span>
-                                </div>
-                                <div class="bed-item">
-                                    <span class="ward-name">Pediatrics</span>
-                                    <div class="progress-bar"><div class="fill green" style="width: 40%;"></div></div>
-                                    <span class="bed-count">18/30 Free</span>
-                                </div>
-                                <div class="bed-item">
-                                    <span class="ward-name">Private Rooms</span>
-                                    <div class="progress-bar"><div class="fill orange" style="width: 75%;"></div></div>
-                                    <span class="bed-count">5/20 Free</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 2. PATIENTS VIEW -->
-                <section id="patients-view" class="view-section">
-                    <div class="section-header">
-                        <div>
-                            <h1>Patient Management</h1>
-                            <p>Manage hospital patient records, admissions, and contact details.</p>
-                        </div>
-                        <button class="btn btn-primary" onclick="openPatientModal()"><i class="fa-solid fa-plus"></i> Add New Patient</button>
-                    </div>
-
+                <!-- DASHBOARD CHARTS & TABLES -->
+                <div class="dashboard-grid">
+                    <!-- Recently Added Students Table Card -->
                     <div class="card">
-                        <div class="table-toolbar">
-                            <div class="search-box">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <input type="text" id="patient-search" placeholder="Search by name, ID, or phone..." onkeyup="filterPatients()">
-                            </div>
-                            <div class="filter-group">
-                                <select id="patient-filter-gender" class="form-select" onchange="filterPatients()">
-                                    <option value="">All Genders</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
+                        <div class="card-header">
+                            <h3>Recently Added Students</h3>
+                            <button class="btn btn-secondary btn-sm" onclick="switchView('students')">View All</button>
                         </div>
                         <div class="table-responsive">
                             <table class="data-table">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Patient Name</th>
-                                        <th>Age / Gender</th>
-                                        <th>Blood Group</th>
-                                        <th>Phone</th>
-                                        <th>Department</th>
+                                        <th>Name</th>
+                                        <th>Course</th>
                                         <th>Status</th>
-                                        <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="patients-table-body"></tbody>
+                                <tbody id="recentStudentsBody">
+                                    <!-- Dynamic rows loaded here -->
+                                </tbody>
                             </table>
                         </div>
                     </div>
-                </section>
 
-                <!-- 3. DOCTORS VIEW -->
-                <section id="doctors-view" class="view-section">
-                    <div class="section-header">
-                        <div>
-                            <h1>Doctor Directory</h1>
-                            <p>View medical staff schedules, specializations, and availability.</p>
-                        </div>
-                    </div>
-                    <div class="doctors-grid" id="doctors-grid-container"></div>
-                </section>
-
-                <!-- 4. APPOINTMENTS VIEW -->
-                <section id="appointments-view" class="view-section">
-                    <div class="section-header">
-                        <div>
-                            <h1>Appointments Schedule</h1>
-                            <p>Manage daily bookings, consultations, and follow-ups.</p>
-                        </div>
-                        <button class="btn btn-primary"><i class="fa-solid fa-calendar-plus"></i> New Appointment</button>
-                    </div>
+                    <!-- Gender Ratio Donut Chart -->
                     <div class="card">
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Appointment ID</th>
-                                        <th>Patient Name</th>
-                                        <th>Doctor</th>
-                                        <th>Department</th>
-                                        <th>Date & Time</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="full-appointments-tbody"></tbody>
-                            </table>
+                        <div class="card-header">
+                            <h3>Gender Distribution</h3>
                         </div>
-                    </div>
-                </section>
-
-                <!-- 5. BEDS VIEW -->
-                <section id="beds-view" class="view-section">
-                    <div class="section-header">
-                        <div>
-                            <h1>Bed Allocation & Status</h1>
-                            <p>Real-time room and ward occupancy monitoring.</p>
-                        </div>
-                    </div>
-                    <div class="stats-grid" id="beds-detailed-grid"></div>
-                </section>
-
-                <!-- 6. SETTINGS VIEW -->
-                <section id="settings-view" class="view-section">
-                    <div class="section-header">
-                        <div>
-                            <h1>System Settings</h1>
-                            <p>Configure hospital preferences, notifications, and user roles.</p>
-                        </div>
-                    </div>
-                    <div class="card" style="max-width: 600px;">
-                        <form onsubmit="event.preventDefault(); alert('Settings saved successfully!');">
-                            <div class="form-group" style="margin-bottom: 1.5rem;">
-                                <label style="display:block; margin-bottom: 0.50rem; font-weight:500;">Hospital Name</label>
-                                <input type="text" class="form-control" value="MediCare Pro General Hospital">
+                        <div class="card-body chart-container">
+                            <svg class="donut-chart" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="38" stroke="#e2e8f0" />
+                                <circle id="chartMaleSegment" cx="50" cy="50" r="38" stroke="#2563eb" stroke-dasharray="0 238" />
+                                <circle id="chartFemaleSegment" cx="50" cy="50" r="38" stroke="#db2777" stroke-dasharray="0 238" stroke-dashoffset="0" />
+                            </svg>
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #2563eb;"></div>
+                                    <span>Male (<span id="pctMale">0%</span>)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #db2777;"></div>
+                                    <span>Female (<span id="pctFemale">0%</span>)</span>
+                                </div>
                             </div>
-                            <div class="form-group" style="margin-bottom: 1.5rem;">
-                                <label style="display:block; margin-bottom: 0.50rem; font-weight:500;">Emergency Contact Hotline</label>
-                                <input type="text" class="form-control" value="+91 1800-420-MEDI">
-                            </div>
-                            <div class="form-group" style="margin-bottom: 1.5rem;">
-                                <input type="checkbox" checked> Send daily summary reports to admin
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="background:var(--primary); color:white;">Save Changes</button>
-                        </form>
-                    </div>
-                </section>
-
-            </main>
-        </div>
-    </div>
-
-    <!-- Patient Add/Edit Modal -->
-    <div class="modal-backdrop" id="patient-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="modal-title">Add New Patient</h3>
-                <button class="icon-btn" onclick="closePatientModal()"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="modal-body">
-                <form id="patient-form">
-                    <input type="hidden" id="patient-id">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" id="p-name" class="form-control" required placeholder="e.g. John Doe">
-                        </div>
-                        <div class="form-group">
-                            <label>Age</label>
-                            <input type="number" id="p-age" class="form-control" required placeholder="e.g. 35">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Gender</label>
-                            <select id="p-gender" class="form-control" required>
+                </div>
+            </section>
+
+            <!-- VIEW 2: ALL STUDENTS TABLE -->
+            <section id="students" class="view-section">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Student Directory</h1>
+                        <p>Manage, filter, and modify student records.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="switchView('add-student')">
+                        <i class="fa-solid fa-plus"></i> Add Student
+                    </button>
+                </div>
+
+                <div class="card">
+                    <!-- Table Search & Filters Header -->
+                    <div class="table-controls">
+                        <div class="search-filter-group">
+                            <div class="input-search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="tableSearchInput" placeholder="Search by name, ID, email...">
+                            </div>
+                            <select id="filterCourse" class="select-filter">
+                                <option value="">All Courses</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Information Technology">Information Technology</option>
+                                <option value="Business Administration">Business Administration</option>
+                                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                            </select>
+                            <select id="filterGender" class="select-filter">
+                                <option value="">All Genders</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
-                                <option value="Other">Other</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Blood Group</label>
-                            <select id="p-blood" class="form-control" required>
-                                <option value="A+">A+</option><option value="A-">A-</option>
-                                <option value="B+">B+</option><option value="B-">B-</option>
-                                <option value="AB+">AB+</option><option value="AB-">AB-</option>
-                                <option value="O+">O+</option><option value="O-">O-</option>
+                            <select id="filterStatus" class="select-filter">
+                                <option value="">All Statuses</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="text" id="p-phone" class="form-control" required placeholder="+91 98765 43210">
+
+                    <!-- Main Data Table -->
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th onclick="handleSort('studentId')">ID <i class="fa-solid fa-sort"></i></th>
+                                    <th onclick="handleSort('fullName')">Full Name <i class="fa-solid fa-sort"></i></th>
+                                    <th>Gender</th>
+                                    <th>Email</th>
+                                    <th>Course</th>
+                                    <th>Year</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentTableBody">
+                                <!-- Dynamic rows rendered here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination-info" id="paginationInfo">Showing 0 of 0 entries</div>
+                        <div class="pagination-controls" id="paginationControls">
+                            <!-- Dynamic pagination buttons -->
                         </div>
-                        <div class="form-group">
-                            <label>Department</label>
-                            <select id="p-dept" class="form-control" required>
-                                <option value="Cardiology">Cardiology</option>
-                                <option value="Neurology">Neurology</option>
-                                <option value="Orthopedics">Orthopedics</option>
-                                <option value="Pediatrics">Pediatrics</option>
-                                <option value="General Medicine">General Medicine</option>
-                            </select>
-                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select id="p-status" class="form-control" required>
-                            <option value="Admitted">Admitted</option>
-                            <option value="Outpatient">Outpatient</option>
-                            <option value="Discharged">Discharged</option>
-                        </select>
+                </div>
+            </section>
+
+            <!-- VIEW 3: ADD/EDIT STUDENT FORM -->
+            <section id="add-student" class="view-section">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1 id="formTitle">Register New Student</h1>
+                        <p>Fill out the required information to add or update student record.</p>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline" style="background:#f1f5f9; color:#334155;" onclick="closePatientModal()">Cancel</button>
-                        <button type="submit" class="btn btn-primary" style="background:var(--primary); color:white;">Save Patient</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <form id="studentForm" novalidate>
+                            <input type="hidden" id="editIndex" value="-1">
+                            
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name <span>*</span></label>
+                                    <input type="text" id="fullName" class="form-control" placeholder="e.g. John Doe" required>
+                                    <span class="error-text">Please enter a valid full name.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="studentId">Student ID <span>*</span></label>
+                                    <input type="text" id="studentId" class="form-control" placeholder="e.g. STU-1001" required>
+                                    <span class="error-text">Unique Student ID is required.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gender">Gender <span>*</span></label>
+                                    <select id="gender" class="form-control" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                    <span class="error-text">Please select a gender.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dob">Date of Birth <span>*</span></label>
+                                    <input type="date" id="dob" class="form-control" required>
+                                    <span class="error-text">Date of Birth is required.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email Address <span>*</span></label>
+                                    <input type="email" id="email" class="form-control" placeholder="john.doe@example.com" required>
+                                    <span class="error-text">Please enter a valid email address.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone">Phone Number <span>*</span></label>
+                                    <input type="tel" id="phone" class="form-control" placeholder="10-digit number" required>
+                                    <span class="error-text">Enter a valid 10-digit phone number.</span>
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label for="address">Address <span>*</span></label>
+                                    <input type="text" id="address" class="form-control" placeholder="Street name, City, Zip" required>
+                                    <span class="error-text">Address is required.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="course">Course <span>*</span></label>
+                                    <select id="course" class="form-control" required>
+                                        <option value="">Select Course</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                        <option value="Business Administration">Business Administration</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                    </select>
+                                    <span class="error-text">Please select a course.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="department">Department <span>*</span></label>
+                                    <input type="text" id="department" class="form-control" placeholder="e.g. School of Computing" required>
+                                    <span class="error-text">Department is required.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="yearSemester">Year / Semester <span>*</span></label>
+                                    <select id="yearSemester" class="form-control" required>
+                                        <option value="">Select Semester</option>
+                                        <option value="1st Year - Sem 1">1st Year - Sem 1</option>
+                                        <option value="1st Year - Sem 2">1st Year - Sem 2</option>
+                                        <option value="2nd Year - Sem 3">2nd Year - Sem 3</option>
+                                        <option value="2nd Year - Sem 4">2nd Year - Sem 4</option>
+                                        <option value="3rd Year - Sem 5">3rd Year - Sem 5</option>
+                                        <option value="3rd Year - Sem 6">3rd Year - Sem 6</option>
+                                        <option value="4th Year - Sem 7">4th Year - Sem 7</option>
+                                        <option value="4th Year - Sem 8">4th Year - Sem 8</option>
+                                    </select>
+                                    <span class="error-text">Please select academic status.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="enrollmentDate">Enrollment Date <span>*</span></label>
+                                    <input type="date" id="enrollmentDate" class="form-control" required>
+                                    <span class="error-text">Enrollment date is required.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="status">Student Status <span>*</span></label>
+                                    <select id="status" class="form-control" required>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end;">
+                                <button type="button" class="btn btn-secondary" onclick="resetStudentForm()">Cancel</button>
+                                <button type="submit" class="btn btn-primary" id="saveBtn">Save Student</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+            </section>
+
+            <!-- VIEW 4: SETTINGS -->
+            <section id="settings" class="view-section">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>System Settings</h1>
+                        <p>Manage data persistence and preferences.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Reset Application Data</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px; margin-bottom: 16px;">Resetting will clear all current changes from localStorage and re-populate default 12 dummy student records.</p>
+                        <button class="btn btn-danger" onclick="restoreDummyData()">
+                            <i class="fa-solid fa-rotate-left"></i> Restore Dummy Data
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- STUDENT DETAILS MODAL -->
+    <div class="modal-backdrop" id="viewModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Student Profile Details</h3>
+                <button class="modal-close" onclick="closeModal('viewModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="student-details-grid" id="detailsContent">
+                    <!-- Loaded dynamically via JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('viewModal')">Close</button>
+                <button class="btn btn-primary" id="modalEditBtn">Edit Student</button>
             </div>
         </div>
     </div>
 
-    <!-- Embedded JavaScript -->
+    <!-- CONFIRM DELETE MODAL -->
+    <div class="modal-backdrop" id="deleteModal">
+        <div class="modal" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Deletion</h3>
+                <button class="modal-close" onclick="closeModal('deleteModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this student record? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('deleteModal')">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        let patientsData = [
-            { id: "P-1001", name: "Aarav Sharma", age: 42, gender: "Male", blood: "O+", phone: "+91 98234 56789", dept: "Cardiology", status: "Admitted" },
-            { id: "P-1002", name: "Priya Patel", age: 29, gender: "Female", blood: "A+", phone: "+91 98111 22334", dept: "Neurology", status: "Outpatient" },
-            { id: "P-1003", name: "Rohan Verma", age: 55, gender: "Male", blood: "B+", phone: "+91 97456 12345", dept: "Orthopedics", status: "Admitted" },
-            { id: "P-1004", name: "Ananya Iyer", age: 34, gender: "Female", blood: "AB+", phone: "+91 96554 44332", dept: "Pediatrics", status: "Discharged" },
-            { id: "P-1005", name: "Vikram Malhotra", age: 61, gender: "Male", blood: "O-", phone: "+91 99887 76655", dept: "General Medicine", status: "Admitted" }
+        // INITIAL DUMMY DATA SET (12 RECORDS)
+        const initialStudents = [
+            { id: "1", studentId: "STU-1001", fullName: "Alexander Wright", gender: "Male", dob: "2001-05-14", email: "alex.wright@example.com", phone: "5550192831", address: "123 Campus Way, NY", course: "Computer Science", department: "School of Computing", yearSemester: "3rd Year - Sem 5", enrollmentDate: "2021-08-20", status: "Active" },
+            { id: "2", studentId: "STU-1002", fullName: "Sophia Martinez", gender: "Female", dob: "2002-09-22", email: "sophia.m@example.com", phone: "5550192832", address: "456 University Ave, CA", course: "Information Technology", department: "School of Computing", yearSemester: "2nd Year - Sem 3", enrollmentDate: "2022-08-15", status: "Active" },
+            { id: "3", studentId: "STU-1003", fullName: "Ethan Davis", gender: "Male", dob: "2000-11-03", email: "ethan.davis@example.com", phone: "5550192833", address: "789 College Rd, TX", course: "Business Administration", department: "School of Business", yearSemester: "4th Year - Sem 7", enrollmentDate: "2020-08-18", status: "Inactive" },
+            { id: "4", studentId: "STU-1004", fullName: "Emma Johnson", gender: "Female", dob: "2003-01-19", email: "emma.j@example.com", phone: "5550192834", address: "321 Innovation Blvd, WA", course: "Mechanical Engineering", department: "School of Engineering", yearSemester: "1st Year - Sem 1", enrollmentDate: "2023-08-21", status: "Active" },
+            { id: "5", studentId: "STU-1005", fullName: "Liam Wilson", gender: "Male", dob: "2001-07-11", email: "liam.w@example.com", phone: "5550192835", address: "654 Academic St, MA", course: "Computer Science", department: "School of Computing", yearSemester: "3rd Year - Sem 6", enrollmentDate: "2021-08-20", status: "Active" },
+            { id: "6", studentId: "STU-1006", fullName: "Olivia Taylor", gender: "Female", dob: "2002-03-30", email: "olivia.t@example.com", phone: "5550192836", address: "987 Elm St, IL", course: "Information Technology", department: "School of Computing", yearSemester: "2nd Year - Sem 4", enrollmentDate: "2022-08-15", status: "Active" },
+            { id: "7", studentId: "STU-1007", fullName: "Noah Anderson", gender: "Male", dob: "2000-12-15", email: "noah.a@example.com", phone: "5550192837", address: "147 Pine Rd, FL", course: "Business Administration", department: "School of Business", yearSemester: "4th Year - Sem 8", enrollmentDate: "2020-08-18", status: "Active" },
+            { id: "8", studentId: "STU-1008", fullName: "Ava Thomas", gender: "Female", dob: "2003-04-05", email: "ava.t@example.com", phone: "5550192838", address: "258 Oak St, OH", course: "Mechanical Engineering", department: "School of Engineering", yearSemester: "1st Year - Sem 2", enrollmentDate: "2023-08-21", status: "Inactive" },
+            { id: "9", studentId: "STU-1009", fullName: "Lucas Jackson", gender: "Male", dob: "2001-10-25", email: "lucas.j@example.com", phone: "5550192839", address: "369 Maple Dr, MI", course: "Computer Science", department: "School of Computing", yearSemester: "3rd Year - Sem 5", enrollmentDate: "2021-08-20", status: "Active" },
+            { id: "10", studentId: "STU-1010", fullName: "Isabella White", gender: "Female", dob: "2002-06-18", email: "isabella.w@example.com", phone: "5550192840", address: "741 Cedar Ave, NC", course: "Information Technology", department: "School of Computing", yearSemester: "2nd Year - Sem 3", enrollmentDate: "2022-08-15", status: "Active" },
+            { id: "11", studentId: "STU-1011", fullName: "Mason Harris", gender: "Male", dob: "2000-08-08", email: "mason.h@example.com", phone: "5550192841", address: "852 Birch Ln, GA", course: "Business Administration", department: "School of Business", yearSemester: "4th Year - Sem 7", enrollmentDate: "2020-08-18", status: "Active" },
+            { id: "12", studentId: "STU-1012", fullName: "Mia Martin", gender: "Female", dob: "2003-02-14", email: "mia.m@example.com", phone: "5550192842", address: "963 Spruce St, VA", course: "Mechanical Engineering", department: "School of Engineering", yearSemester: "1st Year - Sem 1", enrollmentDate: "2023-08-21", status: "Active" }
         ];
 
-        const doctorsData = [
-            { name: "Dr. Robert Vance", specialty: "Chief Cardiologist", exp: "15 Years Exp", image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&h=150&fit=crop&crop=faces", status: "Available" },
-            { name: "Dr. Sarah Jenkins", specialty: "Senior Neurologist", exp: "12 Years Exp", image: "https://images.unsplash.com/photo-1594824813576-9c44569e2c65?w=150&h=150&fit=crop&crop=faces", status: "In Surgery" },
-            { name: "Dr. Amit Deshmukh", specialty: "Orthopedic Surgeon", exp: "10 Years Exp", image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&h=150&fit=crop&crop=faces", status: "Available" },
-            { name: "Dr. Emily Wong", specialty: "Pediatrician", exp: "8 Years Exp", image: "https://images.unsplash.com/photo-1527613426441-2da1747f766d?w=150&h=150&fit=crop&crop=faces", status: "On Round" }
-        ];
+        // GLOBAL APP STATE
+        let students = [];
+        let currentPage = 1;
+        const pageSize = 5;
+        let sortColumn = 'fullName';
+        let sortAscending = true;
+        let deleteTargetId = null;
 
-        const appointmentsData = [
-            { id: "APT-501", patient: "Aarav Sharma", doctor: "Dr. Robert Vance", dept: "Cardiology", time: "10:30 AM", status: "Confirmed" },
-            { id: "APT-502", patient: "Priya Patel", doctor: "Dr. Sarah Jenkins", dept: "Neurology", time: "11:15 AM", status: "Pending" },
-            { id: "APT-503", patient: "Rohan Verma", doctor: "Dr. Amit Deshmukh", dept: "Orthopedics", time: "01:00 PM", status: "Confirmed" },
-            { id: "APT-504", patient: "Ananya Iyer", doctor: "Dr. Emily Wong", dept: "Pediatrics", time: "02:30 PM", status: "Cancelled" }
-        ];
+        // LOCAL STORAGE MANAGEMENT
+        function loadStudents() {
+            const savedData = localStorage.getItem('edupulse_students');
+            if (savedData) {
+                try {
+                    students = JSON.parse(savedData);
+                } catch (e) {
+                    students = [...initialStudents];
+                }
+            } else {
+                students = [...initialStudents];
+                saveStudents();
+            }
+        }
 
-        const bedWards = [
-            { ward: "ICU Ward", total: 20, occupied: 17, free: 3, color: "red" },
-            { ward: "General Ward", total: 60, occupied: 36, free: 24, color: "blue" },
-            { ward: "Pediatrics", total: 30, occupied: 12, free: 18, color: "green" },
-            { ward: "Private Rooms", total: 20, occupied: 15, free: 5, color: "orange" },
-            { ward: "Emergency Ward", total: 25, occupied: 22, free: 3, color: "red" },
-            { ward: "Maternity Ward", total: 40, occupied: 25, free: 15, color: "green" }
-        ];
+        function saveStudents() {
+            localStorage.setItem('edupulse_students', JSON.stringify(students));
+            updateDashboard();
+            renderStudentsTable();
+        }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            initNavigation();
-            initCharts();
-            renderPatientsTable();
-            renderRecentAppointments();
-            renderFullAppointments();
-            renderDoctorsGrid();
-            renderBedsGrid();
-            initPatientForm();
+        function restoreDummyData() {
+            students = [...initialStudents];
+            saveStudents();
+            showToast("Restored initial dummy student records!", "success");
+        }
+
+        // VIEW ROUTING
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+            const targetSection = document.getElementById(viewId);
+            if (targetSection) targetSection.classList.add('active');
+
+            const activeNav = document.querySelector(`.nav-item[data-view="${viewId}"]`);
+            if (activeNav) activeNav.classList.add('active');
+
+            // Close mobile menu if open
+            document.getElementById('sidebar').classList.remove('mobile-open');
+        }
+
+        // NAVIGATION LISTENERS
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const view = item.getAttribute('data-view');
+                if (view) switchView(view);
+            });
         });
 
-        function initNavigation() {
-            const menuItems = document.querySelectorAll(".sidebar-menu li");
-            menuItems.forEach(item => {
-                item.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    menuItems.forEach(i => i.classList.remove("active"));
-                    item.classList.add("active");
-                    switchView(item.getAttribute("data-target"));
-                });
-            });
+        document.getElementById('sidebarToggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('mobile-open');
+        });
 
-            document.getElementById("sidebar-toggle").addEventListener("click", () => {
-                document.getElementById("sidebar").classList.toggle("collapsed");
-            });
-        }
+        // DASHBOARD CALCULATIONS & METRICS
+        function updateDashboard() {
+            const total = students.length;
+            const active = students.filter(s => s.status === 'Active').length;
+            const male = students.filter(s => s.gender === 'Male').length;
+            const female = students.filter(s => s.gender === 'Female').length;
 
-        function switchView(viewId) {
-            document.querySelectorAll(".view-section").forEach(s => s.classList.remove("active"));
-            const target = document.getElementById(viewId);
-            if (target) target.classList.add("active");
-        }
+            document.getElementById('statTotal').innerText = total;
+            document.getElementById('statActive').innerText = active;
+            document.getElementById('statMale').innerText = male;
+            document.getElementById('statFemale').innerText = female;
 
-        function initCharts() {
-            new Chart(document.getElementById('patientChart').getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                    datasets: [{
-                        data: [85, 92, 110, 98, 130, 145, 120, 135, 150, 165, 140, 175],
-                        borderColor: '#0284c7',
-                        backgroundColor: 'rgba(2, 132, 199, 0.08)',
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-            });
+            // Update Donut Chart
+            const pctMaleVal = total > 0 ? Math.round((male / total) * 100) : 0;
+            const pctFemaleVal = total > 0 ? Math.round((female / total) * 100) : 0;
 
-            new Chart(document.getElementById('appointmentChart').getContext('2d'), {
-                type: 'doughnut',
-                data: {
-                    labels: ['Confirmed', 'Pending', 'Cancelled'],
-                    datasets: [{ data: [20, 8, 4], backgroundColor: ['#10b981', '#f59e0b', '#ef4444'], borderWidth: 0 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, cutout: '70%' }
-            });
-        }
+            document.getElementById('pctMale').innerText = `${pctMaleVal}%`;
+            document.getElementById('pctFemale').innerText = `${pctFemaleVal}%`;
 
-        function renderPatientsTable(data = patientsData) {
-            const tbody = document.getElementById("patients-table-body");
-            tbody.innerHTML = "";
-            data.forEach(p => {
-                let badgeClass = p.status === 'Admitted' ? 'success' : (p.status === 'Discharged' ? 'warning' : 'info');
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${p.id}</strong></td>
-                        <td>${p.name}</td>
-                        <td>${p.age} yrs / ${p.gender}</td>
-                        <td><span class="badge info">${p.blood}</span></td>
-                        <td>${p.phone}</td>
-                        <td>${p.dept}</td>
-                        <td><span class="badge ${badgeClass}">${p.status}</span></td>
-                        <td>
-                            <button class="action-icon-btn edit" onclick="editPatient('${p.id}')"><i class="fa-solid fa-pen"></i></button>
-                            <button class="action-icon-btn delete" onclick="deletePatient('${p.id}')"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>`;
-            });
-        }
+            const circumference = 2 * Math.PI * 38; // ~238.76
+            const maleDash = (pctMaleVal / 100) * circumference;
+            const femaleDash = (pctFemaleVal / 100) * circumference;
 
-        function renderRecentAppointments() {
-            const tbody = document.getElementById("recent-appointments-tbody");
-            tbody.innerHTML = "";
-            appointmentsData.slice(0, 4).forEach(a => {
-                let badgeClass = a.status === 'Confirmed' ? 'success' : (a.status === 'Pending' ? 'warning' : 'danger');
-                tbody.innerHTML += `<tr><td><strong>${a.patient}</strong></td><td>${a.dept}</td><td>${a.doctor}</td><td>${a.time}</td><td><span class="badge ${badgeClass}">${a.status}</span></td></tr>`;
-            });
-        }
+            const maleSeg = document.getElementById('chartMaleSegment');
+            const femaleSeg = document.getElementById('chartFemaleSegment');
 
-        function renderFullAppointments() {
-            const tbody = document.getElementById("full-appointments-tbody");
-            tbody.innerHTML = "";
-            appointmentsData.forEach(a => {
-                let badgeClass = a.status === 'Confirmed' ? 'success' : (a.status === 'Pending' ? 'warning' : 'danger');
-                tbody.innerHTML += `<tr><td><strong>${a.id}</strong></td><td>${a.patient}</td><td>${a.doctor}</td><td>${a.dept}</td><td>${a.time}</td><td><span class="badge ${badgeClass}">${a.status}</span></td><td><button class="action-icon-btn edit"><i class="fa-solid fa-eye"></i></button></td></tr>`;
-            });
-        }
+            if (maleSeg && femaleSeg) {
+                maleSeg.setAttribute('stroke-dasharray', `${maleDash} ${circumference}`);
+                femaleSeg.setAttribute('stroke-dasharray', `${femaleDash} ${circumference}`);
+                femaleSeg.setAttribute('stroke-dashoffset', `-${maleDash}`);
+            }
 
-        function renderDoctorsGrid() {
-            const container = document.getElementById("doctors-grid-container");
-            container.innerHTML = "";
-            doctorsData.forEach(d => {
-                container.innerHTML += `
-                    <div class="doctor-card">
-                        <img src="${d.image}" alt="${d.name}">
-                        <h4>${d.name}</h4>
-                        <p class="specialty">${d.specialty}</p>
-                        <p class="meta">${d.exp} • <span style="color:var(--success)">${d.status}</span></p>
-                        <button class="btn btn-outline" style="width:100%; justify-content:center; color:var(--primary); border-color:var(--border);" onclick="switchView('appointments-view')">Book Consult</button>
-                    </div>`;
-            });
-        }
+            // Render Recent 5 Students
+            const recentBody = document.getElementById('recentStudentsBody');
+            recentBody.innerHTML = '';
+            const recentList = [...students].slice(-5).reverse();
 
-        function renderBedsGrid() {
-            const container = document.getElementById("beds-detailed-grid");
-            if (!container) return;
-            container.innerHTML = "";
-            bedWards.forEach(w => {
-                const pct = Math.round((w.occupied / w.total) * 100);
-                container.innerHTML += `
-                    <div class="stat-card">
-                        <div class="stat-icon ${w.color}"><i class="fa-solid fa-bed-pulse"></i></div>
-                        <div class="stat-details" style="width:100%;">
-                            <h3>${w.free} / ${w.total} Free</h3>
-                            <p>${w.ward} (${pct}% Occupied)</p>
-                            <div class="progress-bar" style="margin-top:6px;"><div class="fill ${w.color}" style="width: ${pct}%;"></div></div>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        function filterPatients() {
-            const query = document.getElementById("patient-search").value.toLowerCase();
-            const genderFilter = document.getElementById("patient-filter-gender").value;
-            const filtered = patientsData.filter(p => (p.name.toLowerCase().includes(query) || p.id.toLowerCase().includes(query)) && (genderFilter === "" || p.gender === genderFilter));
-            renderPatientsTable(filtered);
-        }
-
-        function openPatientModal(patient = null) {
-            const form = document.getElementById("patient-form");
-            form.reset();
-            if (patient) {
-                document.getElementById("modal-title").innerText = "Edit Patient Details";
-                document.getElementById("patient-id").value = patient.id;
-                document.getElementById("p-name").value = patient.name;
-                document.getElementById("p-age").value = patient.age;
-                document.getElementById("p-gender").value = patient.gender;
-                document.getElementById("p-blood").value = patient.blood;
-                document.getElementById("p-phone").value = patient.phone;
-                document.getElementById("p-dept").value = patient.dept;
-                document.getElementById("p-status").value = patient.status;
+            if (recentList.length === 0) {
+                recentBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted);">No records available</td></tr>`;
             } else {
-                document.getElementById("modal-title").innerText = "Add New Patient";
-                document.getElementById("patient-id").value = "P-" + (1000 + patientsData.length + 1);
+                recentList.forEach(s => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${s.studentId}</strong></td>
+                        <td>${s.fullName}</td>
+                        <td>${s.course}</td>
+                        <td><span class="status-badge ${s.status.toLowerCase()}">${s.status}</span></td>
+                    `;
+                    recentBody.appendChild(tr);
+                });
             }
-            document.getElementById("patient-modal").classList.add("active");
         }
 
-        function closePatientModal() {
-            document.getElementById("patient-modal").classList.remove("active");
-        }
+        // FILTER, SEARCH, SORT, PAGINATION LOGIC
+        function getFilteredStudents() {
+            const searchQuery = (document.getElementById('tableSearchInput').value || document.getElementById('globalSearch').value).toLowerCase();
+            const courseFilter = document.getElementById('filterCourse').value;
+            const genderFilter = document.getElementById('filterGender').value;
+            const statusFilter = document.getElementById('filterStatus').value;
 
-        function initPatientForm() {
-            document.getElementById("patient-form").addEventListener("submit", (e) => {
-                e.preventDefault();
-                const id = document.getElementById("patient-id").value;
-                const name = document.getElementById("p-name").value;
-                const age = parseInt(document.getElementById("p-age").value);
-                const gender = document.getElementById("p-gender").value;
-                const blood = document.getElementById("p-blood").value;
-                const phone = document.getElementById("p-phone").value;
-                const dept = document.getElementById("p-dept").value;
-                const status = document.getElementById("p-status").value;
+            return students.filter(s => {
+                const matchesSearch = s.fullName.toLowerCase().includes(searchQuery) ||
+                                      s.studentId.toLowerCase().includes(searchQuery) ||
+                                      s.email.toLowerCase().includes(searchQuery) ||
+                                      s.course.toLowerCase().includes(searchQuery);
 
-                const idx = patientsData.findIndex(p => p.id === id);
-                if (idx >= 0) {
-                    patientsData[idx] = { id, name, age, gender, blood, phone, dept, status };
-                } else {
-                    patientsData.unshift({ id, name, age, gender, blood, phone, dept, status });
-                }
-                renderPatientsTable();
-                closePatientModal();
+                const matchesCourse = courseFilter === "" || s.course === courseFilter;
+                const matchesGender = genderFilter === "" || s.gender === genderFilter;
+                const matchesStatus = statusFilter === "" || s.status === statusFilter;
+
+                return matchesSearch && matchesCourse && matchesGender && matchesStatus;
             });
         }
 
-        function editPatient(id) {
-            const p = patientsData.find(item => item.id === id);
-            if (p) openPatientModal(p);
+        function renderStudentsTable() {
+            let filtered = getFilteredStudents();
+
+            // Sort logic
+            filtered.sort((a, b) => {
+                let valA = a[sortColumn].toString().toLowerCase();
+                let valB = b[sortColumn].toString().toLowerCase();
+                if (valA < valB) return sortAscending ? -1 : 1;
+                if (valA > valB) return sortAscending ? 1 : -1;
+                return 0;
+            });
+
+            // Pagination calculation
+            const totalRecords = filtered.length;
+            const totalPages = Math.ceil(totalRecords / pageSize) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * pageSize;
+            const paginatedData = filtered.slice(startIndex, startIndex + pageSize);
+
+            const tbody = document.getElementById('studentTableBody');
+            tbody.innerHTML = '';
+
+            if (paginatedData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8">
+                            <div class="empty-state">
+                                <i class="fa-solid fa-folder-open"></i>
+                                <p>No matching student records found.</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            } else {
+                paginatedData.forEach(s => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${s.studentId}</strong></td>
+                        <td>${s.fullName}</td>
+                        <td>${s.gender}</td>
+                        <td>${s.email}</td>
+                        <td>${s.course}</td>
+                        <td>${s.yearSemester}</td>
+                        <td><span class="status-badge ${s.status.toLowerCase()}">${s.status}</span></td>
+                        <td>
+                            <div class="action-cell">
+                                <button class="btn-action view" onclick="viewStudentDetails('${s.id}')" title="View"><i class="fa-solid fa-eye"></i></button>
+                                <button class="btn-action edit" onclick="editStudent('${s.id}')" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn-action delete" onclick="promptDelete('${s.id}')" title="Delete"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Render Pagination Info & Controls
+            document.getElementById('paginationInfo').innerText = `Showing ${totalRecords === 0 ? 0 : startIndex + 1} to ${Math.min(startIndex + pageSize, totalRecords)} of ${totalRecords} entries`;
+
+            const controls = document.getElementById('paginationControls');
+            controls.innerHTML = '';
+
+            const prevBtn = document.createElement('button');
+            prevBtn.className = `btn btn-secondary btn-sm ${currentPage === 1 ? 'disabled' : ''}`;
+            prevBtn.innerText = 'Previous';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; renderStudentsTable(); } };
+            controls.appendChild(prevBtn);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `btn btn-sm ${currentPage === i ? 'btn-primary' : 'btn-secondary'}`;
+                pageBtn.innerText = i;
+                pageBtn.onclick = () => { currentPage = i; renderStudentsTable(); };
+                controls.appendChild(pageBtn);
+            }
+
+            const nextBtn = document.createElement('button');
+            nextBtn.className = `btn btn-secondary btn-sm ${currentPage === totalPages ? 'disabled' : ''}`;
+            nextBtn.innerText = 'Next';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage++; renderStudentsTable(); } };
+            controls.appendChild(nextBtn);
         }
 
-        function deletePatient(id) {
-            if (confirm(`Are you sure you want to delete patient record ${id}?`)) {
-                patientsData = patientsData.filter(p => p.id !== id);
-                renderPatientsTable();
+        function handleSort(col) {
+            if (sortColumn === col) {
+                sortAscending = !sortAscending;
+            } else {
+                sortColumn = col;
+                sortAscending = true;
             }
+            renderStudentsTable();
         }
-    </script>
-</body>
-</html>
+
+        // EVENT LISTENERS FOR FILTERS
+        document.getElementById('tableSearchInput').addEventListener('input', () => { currentPage = 1; renderStudentsTable(); });
+        document.getElementById('globalSearch').addEventListener('input', (e) => {
+            document.getElementById('tableSearchInput').value = e.target.value;
+            switchView('students');
+            currentPage = 1;
+            renderStudentsTable();
+        });
+        document.getElementById('filterCourse').addEventListener('change', () => { currentPage = 1; renderStudentsTable(); });
+        document.getElementById('filterGender').addEventListener('change', () => { currentPage = 1; renderStudentsTable(); });
+        document.getElementById('filterStatus').addEventListener('change', () => { currentPage = 1; renderStudentsTable(); });
+
+        // FORM VALIDATION & SAVE LOGIC
+        const studentForm = document.getElementById('studentForm');
+
+        studentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let isValid = true;
+            const fields = ['fullName', 'studentId', 'gender', 'dob', 'email', 'phone', 'address', 'course', 'department', 'yearSemester', 'enrollmentDate'];
+
+            fields.forEach(field => {
+                const input = document.getElementById(field);
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+
+            // Email validation
+            const emailInput = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailInput.value && !emailRegex.test(emailInput.value)) {
+                emailInput.classList.add('error');
+                isValid = false;
+            }
+
+            // Phone validation
+            const phoneInput = document.getElementById('phone');
+            const phoneRegex = /^\d{10,}$/;
+            if (phoneInput.value && !phoneRegex.test(phoneInput.value.replace(/[-()\s]/g, ''))) {
+                phoneInput.classList.add('error');
+                isValid = false;
+            }
+
+            // Duplicate ID Validation
+            const studentIdInput = document.getElementById('studentId');
+            const editIndex = document.getElementById('editIndex').value;
+            const existingStudent = students.find(s => s.studentId.toLowerCase() === studentIdInput.value.trim().toLowerCase() && s.id !== editIndex);
+
+            if (existingStudent) {
+                studentIdInput.classList.add('error');
+                showToast("Student ID already exists! Unique ID required.", "danger");
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            const studentObj = {
+                id: editIndex !== "-1" ? editIndex : Date.now().toString(),
+                fullName: document.getElementById('fullName').value.trim(),
+                studentId: document.getElementById('studentId').value.trim(),
+                gender: document.getElementById('gender').value,
+                dob: document.getElementById('dob').value,
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                address: document.getElementById('address').value.trim(),
+                course: document.getElementById('course').value,
+                department: document.getElementById('department').value.trim(),
+                yearSemester: document.getElementById('yearSemester').value,
+                enrollmentDate: document.getElementById('enrollmentDate').value,
+                status: document.getElementById('status').value
+            };
+
+            if (editIndex !== "-1") {
+                const idx = students.findIndex(s => s.id === editIndex);
+                if (idx !== -1) students[idx] = studentObj;
+                showToast("Student updated successfully!", "success");
+            } else {
+                students.push(studentObj);
+                showToast("New student registered successfully!", "success");
+            }
+
+            saveStudents();
+            resetStudentForm();
+            switchView('students');
+        });
+
+        function resetStu
